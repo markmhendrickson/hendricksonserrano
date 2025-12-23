@@ -1,0 +1,47 @@
+name: Deploy markmhendrickson.com redirect
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'markmhendrickson-redirect/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages-markmhendrickson"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages-markmhendrickson
+      url: https://markmhendrickson.com
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      
+      - name: Copy redirect files
+        run: |
+          mkdir -p _site
+          cp markmhendrickson-redirect/index.html _site/
+          cp markmhendrickson-redirect/CNAME _site/
+      
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_site'
+      
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+

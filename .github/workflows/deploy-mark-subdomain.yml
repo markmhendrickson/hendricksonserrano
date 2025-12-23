@@ -32,8 +32,8 @@ jobs:
       - name: Copy mark subdomain files
         run: |
           mkdir -p _site
-          cp -r mark/* _site/
-          cp mark/CNAME _site/ 2>/dev/null || true
+          cp mark/index.html _site/
+          cp mark/CNAME _site/
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

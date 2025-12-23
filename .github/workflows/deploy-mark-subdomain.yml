@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - 'mark/**'
+      - '.github/workflows/deploy-mark-subdomain.yml'
+  workflow_dispatch:
 
 permissions:
   contents: read
